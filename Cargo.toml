@@ -1,0 +1,4 @@
+[package]
+name = "warp"
+version = "0.1.0"
+authors = ["Kriegslustig <github@ls7.ch>"]
