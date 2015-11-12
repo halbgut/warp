@@ -88,10 +88,7 @@ fn warp (target: String, warpfile: File) -> Result<(), String> {
         },
         Err(err) => return Err(format!("Unable to warp because: {:?}", err))
     };
-    match env::set_current_dir(path::PathBuf::from(warp_dir)) {
-        Err(err) => Err(format!("{:?}", err)),
-        Ok(_) => Ok(())
-    }
+    Ok(println!("{}", warp_dir))
 }
 
 /// Takes a string of warps and returns the directory the warp passed as a second argument points
