@@ -6,10 +6,10 @@ function warp {
   commands["add"]=1
   for bin in /usr/bin/warp /usr/local/bin/warp; do
     if [ -f ${bin} ]; then
-      if [ -n commands[${1}] ]; then
-        echo $(${bin} ${*})
+      if [[ ${commands[${1}]} == 1 ]]; then
+        ${bin} ${*}
       else
-        ${bin} {*}
+        cd $(${bin} ${*})
       fi
     fi
   done
