@@ -81,7 +81,7 @@ fn add_warp_point (mut file: File, name: String, location: path::PathBuf) -> Res
 fn warp (target: String, warpfile: File) -> Result<(), String> {
     let warp_dir = match get_file(warpfile) {
         Ok(warps) => {
-            match get_warp(warps, target) {
+            match get_warp(warps.split_terminator('\n').collect(), target) {
                 Some(warps) => warps,
                 None => return Err("No warps found".to_string())
             }
@@ -93,15 +93,19 @@ fn warp (target: String, warpfile: File) -> Result<(), String> {
 
 /// Takes a string of warps and returns the directory the warp passed as a second argument points
 /// to.
-fn get_warp (str: String, target: String) -> Option<String> {
-    let warps: Vec<&str> = str.split_terminator('\n').collect();
-    let vec = get_pieces(warps[0]);
-    if vec.len() == 2 && vec[0] == target {
-        Some(vec[1].to_string())
-    } else if warps.len() == 2 {
-        get_warp(warps[1].to_string(), target)
-    } else {
-        None
+fn get_warp (mut warps: Vec<&str>, target: String) -> Option<String> {
+    match warps.pop() {
+        Some(pop) => {
+            let vec = get_pieces(pop);
+            if vec.len() == 2 && vec[0] == target {
+                Some(vec[1].to_string())
+            } else if vec.len() == 2 {
+                get_warp(warps, target)
+            } else {
+                None
+            }
+        },
+        None => None
     }
 }
 
