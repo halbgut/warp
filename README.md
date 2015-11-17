@@ -40,3 +40,7 @@ warp bookmarkname
 warp list
 ```
 
+## TODO
+* add the rm function
+* clean up the install script regarding the install location of the binary (maybe put it inside a ~/.warp directory with the warpfile)
+
